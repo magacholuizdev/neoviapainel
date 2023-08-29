@@ -50,7 +50,9 @@ export default function SidebarComponent(): JSX.Element {
         </StyledHeaderSidebarContainer>
         <StyledSidebarMenuAdmin>
           <MenuAdminLink
-            isSelected={itemSelected === "Usuários" ? true : false}
+            color={
+              itemSelected === "Usuários" ? colors.NEOVIA_RED : colors.WHITE
+            }
             onClick={() => {
               setItemSelected("Usuários");
               setSelectedDepartment("Usuários");
@@ -60,7 +62,7 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>Usuários</MenuItem>
           </MenuAdminLink>
           <MenuAdminLink
-            isSelected={itemSelected === "Perfis" ? true : false}
+            color={itemSelected === "Perfis" ? colors.NEOVIA_RED : colors.WHITE}
             onClick={() => {
               setItemSelected("Perfis");
               setSelectedDepartment("Perfis");
@@ -70,7 +72,11 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>Perfis</MenuItem>
           </MenuAdminLink>
           <MenuAdminLink
-            isSelected={itemSelected === "Departamentos" ? true : false}
+            color={
+              itemSelected === "Departamentos"
+                ? colors.NEOVIA_RED
+                : colors.WHITE
+            }
             onClick={() => {
               setItemSelected("Departamentos");
               setSelectedDepartment("Departamentos");
@@ -80,7 +86,9 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>Departamentos</MenuItem>
           </MenuAdminLink>
           <MenuAdminLink
-            isSelected={itemSelected === "Sistemas" ? true : false}
+            color={
+              itemSelected === "Sistemas" ? colors.NEOVIA_RED : colors.WHITE
+            }
             onClick={() => {
               setItemSelected("Sistemas");
               setSelectedDepartment("Sistemas");
@@ -92,7 +100,9 @@ export default function SidebarComponent(): JSX.Element {
         </StyledSidebarMenuAdmin>
         <MenuContainer>
           <MenuLink
-            isSelected={itemSelected === "Home" ? true : false}
+            color={
+              itemSelected === "Home" ? colors.NEOVIA_RED : colors.NEOVIA_BLACK
+            }
             onClick={() => {
               setItemSelected("Home");
               setSelectedDepartment("Home");
@@ -102,7 +112,11 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>Home</MenuItem>
           </MenuLink>
           <MenuLink
-            isSelected={itemSelected === "Engenharia" ? true : false}
+            color={
+              itemSelected === "Engenharia"
+                ? colors.NEOVIA_RED
+                : colors.NEOVIA_BLACK
+            }
             onClick={() => {
               setItemSelected("Engenharia");
               setSelectedDepartment("Engenharia");
@@ -112,7 +126,9 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>Engenharia</MenuItem>
           </MenuLink>
           <MenuLink
-            isSelected={itemSelected === "RH" ? true : false}
+            color={
+              itemSelected === "RH" ? colors.NEOVIA_RED : colors.NEOVIA_BLACK
+            }
             onClick={() => {
               setItemSelected("RH");
               setSelectedDepartment("RH");
@@ -122,7 +138,11 @@ export default function SidebarComponent(): JSX.Element {
             <MenuItem>RH</MenuItem>
           </MenuLink>
           <MenuLink
-            isSelected={itemSelected === "Contabilidade" ? true : false}
+            color={
+              itemSelected === "Contabilidade"
+                ? colors.NEOVIA_RED
+                : colors.NEOVIA_BLACK
+            }
             onClick={() => {
               setItemSelected("Contabilidade");
               setSelectedDepartment("Contabilidade");

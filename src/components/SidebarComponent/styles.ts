@@ -53,12 +53,12 @@ const StyledSidebarMenuAdmin = styled.ul`
   flex-direction: column;
 `;
 
-const MenuAdminLink = styled.a<ItemSelectedProps>`
+const MenuAdminLink = styled.a`
   display: flex;
   align-items: center;
   font-size: 1.5rem;
   cursor: pointer;
-  color: ${(props) => (props.isSelected ? colors.NEOVIA_RED : colors.WHITE)};
+  color: ${(props) => props.color};
 `;
 
 // Sidebar hamburguer
@@ -104,13 +104,12 @@ const MenuContainer = styled.ul`
   }
 `;
 
-const MenuLink = styled.a<ItemSelectedProps>`
+const MenuLink = styled.a`
   display: flex;
   align-items: center;
   font-size: 1.5rem;
   cursor: pointer;
-  color: ${(props) =>
-    props.isSelected ? colors.NEOVIA_RED : colors.NEOVIA_BLACK};
+  color: ${(props) => props.color};
   cursor: pointer;
 `;
 

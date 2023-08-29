@@ -1,11 +1,6 @@
 import { styled } from "styled-components";
 
-type IProps = {
-  urlbackground: string;
-};
-
-const StyledBannerContainer = styled.div<IProps>`
-  background-image: url(${({ urlbackground }) => urlbackground});
+const StyledBannerContainer = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

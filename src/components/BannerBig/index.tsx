@@ -8,6 +8,8 @@ type BannerBigProps = {
 
 export default function BannerBig({ children }: BannerBigProps): JSX.Element {
   return (
-    <StyledBannerContainer urlbackground="https://static.wixstatic.com/media/1eed39_7e95a421f7414ec4821ea358240a43f3~mv2.jpg/v1/fill/w_1351,h_780,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1eed39_7e95a421f7414ec4821ea358240a43f3~mv2.jpg"></StyledBannerContainer>
+    <StyledBannerContainer>
+      <Image alt="banner_image" src={Banner1} />
+    </StyledBannerContainer>
   );
 }
