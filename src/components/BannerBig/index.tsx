@@ -9,7 +9,7 @@ type BannerBigProps = {
 export default function BannerBig({ children }: BannerBigProps): JSX.Element {
   return (
     <StyledBannerContainer>
-      <Image alt="banner_image" src={Banner1} />
+      <Image alt="banner_image" src={Banner1} style={{ height: "100vh" }} />
     </StyledBannerContainer>
   );
 }

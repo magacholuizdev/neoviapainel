@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/efcd2bd1-6da2-42d7-976d-2bd9d654d845/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/neoviapainel",
+  "appService.deploySubpath": "."
+}
