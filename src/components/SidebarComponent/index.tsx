@@ -19,19 +19,25 @@ import PersonIcon from "@mui/icons-material/Person";
 import PeopleIcon from "@mui/icons-material/People";
 import BusinessIcon from "@mui/icons-material/Business";
 import WysiwygIcon from "@mui/icons-material/Wysiwyg";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Text from "components/Text";
 import { colors } from "../../../styles/variables";
-import { useEffect, useState } from "react";
-import ButtonSubmit from "components/Button/Submit";
+import { useState } from "react";
 import Link from "next/link";
 import LogoComponent from "components/LogoComponent";
 import { useDepartmentContext } from "context/DepartmentContext";
+import { useMsal } from "@azure/msal-react";
 
 export default function SidebarComponent(): JSX.Element {
   const [itemSelected, setItemSelected] = useState<string>("Home");
   const { selectedDepartment, setSelectedDepartment } = useDepartmentContext();
+  const { instance } = useMsal();
+
+  const handleLogout = () => {
+    instance.logoutRedirect({
+      postLogoutRedirectUri: "/",
+    });
+  };
 
   return (
     <StyledSidebarBackground>
@@ -150,6 +156,10 @@ export default function SidebarComponent(): JSX.Element {
           >
             <PaymentsIcon fontSize="large" />
             <MenuItem>Contabilidade</MenuItem>
+          </MenuLink>
+          <MenuLink color={colors.NEOVIA_BLACK} onClick={handleLogout}>
+            <ExitToAppIcon fontSize="large" />
+            <MenuItem>Sair</MenuItem>
           </MenuLink>
         </MenuContainer>
       </StyledSidebarContainer>

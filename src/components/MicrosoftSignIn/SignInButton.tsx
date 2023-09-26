@@ -5,6 +5,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { loginRequest } from "./authConfig";
 import Image from "next/image";
 import MicrosoftButton from "../../../public/images/ms-symbollockup_signin_light.svg";
+import router from "next/router";
 
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
@@ -14,23 +15,24 @@ import MicrosoftButton from "../../../public/images/ms-symbollockup_signin_light
 export const SignInButton = () => {
   const { instance } = useMsal();
 
-  const handleLogin = (loginType: any) => {
-    if (loginType === "popup") {
-      instance.loginPopup(loginRequest).catch((e) => {
+  const handleLogin = () => {
+    instance
+      .loginRedirect({
+        scopes: ["user.read"],
+      })
+      .then(() => {
+        router.push("/home");
+      })
+      .catch((e) => {
         console.log(e);
       });
-    } else if (loginType === "redirect") {
-      instance.loginRedirect(loginRequest).catch((e) => {
-        console.log(e);
-      });
-    }
   };
   return (
     <Image
       width={235}
       src={MicrosoftButton}
       alt="Mirosoft Button"
-      onClick={() => handleLogin("redirect")}
+      onClick={() => handleLogin()}
     />
   );
 };

@@ -29,6 +29,7 @@ export const PageLayout = (props: any) => {
           <SignInButton />
         </div>
       </Navbar>
+
       <br />
       {props.children}
     </>

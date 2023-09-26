@@ -1,6 +1,12 @@
 import SignInData from "models/Auth/SignInData";
+import { LoginResult } from "models/LoginResult/LoginResult";
+import { User } from "models/User";
+import { UserProfile, UserProfileName } from "models/UserProfile";
 import Router, { useRouter } from "next/router";
+import { destroyCookie, setCookie } from "nookies";
 import { createContext, useContext, useEffect, useState } from "react";
+import { AuthService } from "services/AuthService";
+import { UserProfileService } from "services/UserProfileService";
 import store from "utils/store";
 
 type AuthContextType = {
@@ -19,16 +25,21 @@ type StudentInfo = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any, props: any) {
+  const [user, setUser] = useState<User>();
+  const [userProfile, setUserProfile] = useState<UserProfile>();
   const cookieParams = { secure: true, sameSite: "Strict" };
   const [msg, setMsg] = useState("");
-  const [welcomeSeen, setWelcomeSeen] = useState<boolean>(false);
   const router = useRouter();
 
-  const [userLevel, setUserLevel] = useState<number>(0);
-
-  const [student, setStudent] = useState<StudentInfo | undefined>();
-
-  useEffect(() => {}, []);
+  function setUserCookies(user: User, profile: UserProfile) {
+    setCookie(undefined, "userData", JSON.stringify(user), cookieParams);
+    setCookie(
+      undefined,
+      "userProfileData",
+      JSON.stringify(profile),
+      cookieParams
+    );
+  }
 
   function setTempMessage(message: string) {
     setMsg(message);
@@ -37,6 +48,11 @@ export function AuthProvider({ children }: any, props: any) {
 
   async function getToken(data: SignInData): Promise<boolean> {
     try {
+      let loginResult = {} as LoginResult;
+      loginResult = await AuthService.login(data);
+      AuthService.setToken(loginResult.token);
+      setCookie(undefined, "painel.token", loginResult.token, cookieParams);
+      return true;
     } catch (_) {
       setTempMessage("Login ou senha incorretos");
     }
@@ -47,14 +63,44 @@ export function AuthProvider({ children }: any, props: any) {
   async function signInData(dto: SignInData) {
     setMsg("");
     if (await getToken(dto)) {
+      const profile = await getUserInfo(dto.email);
+      console.log("Profile: ", profile);
+      routeIt(profile);
     }
   }
 
-  function isNoProductDomain(domain: string): boolean {
-    return domain === process.env.MAIN_DOMAIN;
+  async function getUserInfo(email: string): Promise<UserProfile | undefined> {
+    try {
+      const lUSer = await AuthService.getUserInfo(email);
+      setUser(lUSer);
+
+      const lUserProfile = await UserProfileService.getUserProfileById(
+        lUSer.profileId
+      );
+      setUserProfile(lUserProfile);
+
+      setUserCookies(lUSer, lUserProfile);
+      return lUserProfile;
+    } catch (_) {
+      setTempMessage("Erro no login.");
+    }
+  }
+
+  function routeIt(profile?: UserProfile) {
+    if (profile) {
+      switch (profile.name) {
+        case UserProfileName.USER:
+          router.push("/home");
+          break;
+        default:
+          router.push("/home");
+      }
+    }
   }
 
   function logout() {
+    destroyCookie(null, "painel.token");
+    destroyCookie(null, "user");
 
     store.cleanAll();
 

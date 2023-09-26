@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { colors } from "../../variables";
 
 export const Container = styled.main`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -23,7 +24,6 @@ export const Container = styled.main`
     flex-direction: column;
     background: #eff1f3;
     align-items: center;
-    width: 50%;
 
     .logo-responsive {
       position: absolute;
@@ -153,8 +153,6 @@ export const Container = styled.main`
     height: auto;
 
     .form-container {
-      width: 45%;
-
       form {
         position: unset;
         height: 430px;
@@ -260,6 +258,7 @@ export const InputWrapper = styled.label`
     margin: 8px 0;
     border-radius: 6px;
     display: inline-block;
+    border: 1px solid ${colors.PROTOTYPE_BLACK20};
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08);
   }
   @media (min-width: 1024px) {
@@ -278,6 +277,7 @@ export const InputWrapper = styled.label`
     left: 68%;
     font-size: 10px;
     margin-top: 19px;
+    color: ${colors.PROTOTYPE_GRAY500};
     line-height: 13px;
     font-weight: 700;
     border: 0;

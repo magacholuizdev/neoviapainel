@@ -5,7 +5,7 @@ import React from "react";
 import { FragmentComponent } from "container/Fragments";
 
 type LayoutComponentProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export default function LayoutComponent({

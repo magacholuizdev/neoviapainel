@@ -9,19 +9,7 @@ const StyledContainerInputChildren = styled.div`
   display: flex;
 `;
 
-const StyledLabel = styled.label`
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-top: 8px;
-  font-size: 14px;
-  line-height: 18px;
-  font-family: "IBM Plex Sans", sans-serif;
-  span {
-    color: ${colors.REDWARNNING};
-    padding: 0 5px;
-  }
-`;
+const StyledLabel = styled.label``;
 
 const StyledInput = styled.input`
   font-weight: 400;

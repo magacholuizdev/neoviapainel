@@ -1,11 +1,21 @@
 import LayoutComponent from "components/LayoutComponent";
 import { Container } from "../../styles/pages/login/styles";
-import { Fragment, useState } from "react";
-import { useMsal } from "@azure/msal-react";
+import { Fragment, useEffect, useState } from "react";
+import {
+  AuthenticatedTemplate,
+  MsalAuthenticationTemplate,
+  MsalProvider,
+  useIsAuthenticated,
+  useMsal,
+} from "@azure/msal-react";
 import { callMsGraph } from "components/MicrosoftSignIn/graph";
-import { loginRequest } from "components/MicrosoftSignIn/authConfig";
+import {
+  loginRequest,
+  msalConfig,
+} from "components/MicrosoftSignIn/authConfig";
 import { ProfileData } from "components/MicrosoftSignIn/ProfileData";
 import { Button } from "react-bootstrap";
+import { InteractionType, PublicClientApplication } from "@azure/msal-browser";
 
 const ProfileContent = () => {
   const { instance, accounts } = useMsal();
@@ -41,10 +51,10 @@ const ProfileContent = () => {
 
 export default function Home(): JSX.Element {
   return (
-    <Container>
-      <LayoutComponent>
-        <ProfileContent />
-      </LayoutComponent>
-    </Container>
+    <AuthenticatedTemplate>
+      <Container>
+        <LayoutComponent></LayoutComponent>
+      </Container>
+    </AuthenticatedTemplate>
   );
 }

@@ -13,13 +13,12 @@ import { LogLevel } from "@azure/msal-browser";
 
 export const msalConfig = {
   auth: {
-    clientId: "f9557b30-32bb-494b-b8ec-4297c148656a",
-    authority:
-      "https://login.microsoftonline.com/e121ff35-e664-4910-b9e1-50689b8ea690",
-    redirectUri: "https://neoviapainel.azurewebsites.net/home",
-    // clientId: process.env.MICROSOFT_CLIENT_ID || "",
-    // authority: process.env.MICROSOFT_AUTHORITY || "",
-    // redirectUri: process.env.MICROSGT_REDIRECT_URI || "",
+    clientId: process.env.MICROSOFT_CLIENT_ID,
+    // authority: "https://login.microsoftonline.com/e121ff35-e664-4910-b9e1-50689b8ea690",
+    //redirectUri: "https://neoviapainel.azurewebsites.net/home",
+    //clientId: process.env.MICROSOFT_CLIENT_ID || "",
+    authority: process.env.MICROSOFT_AUTHORITY,
+    redirectUri: "http://localhost:3000",
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored

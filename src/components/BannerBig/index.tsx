@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { StyledBannerContainer, StyledBannerGroup } from "./styles";
-import Banner1 from "../../../public/images/banner2.webp";
+import Banner2 from "../../../public/images/banner_2.png";
 
 type BannerBigProps = {
   children?: React.ReactNode;
@@ -9,7 +9,11 @@ type BannerBigProps = {
 export default function BannerBig({ children }: BannerBigProps): JSX.Element {
   return (
     <StyledBannerContainer>
-      <Image alt="banner_image" src={Banner1} style={{ height: "100vh" }} />
+      <Image
+        alt="banner_image"
+        style={{ height: "100%", width: "100%" }}
+        src={Banner2}
+      />
     </StyledBannerContainer>
   );
 }

@@ -29,12 +29,12 @@ export const SignOutButton = () => {
       drop="start"
       title="Sign Out"
     >
-      <Dropdown.Item as="button" onClick={() => handleLogout("popup")}>
+      {/* <Dropdown.Item as="button" onClick={() => handleLogout("popup")}>
         Sign out using Popup
       </Dropdown.Item>
       <Dropdown.Item as="button" onClick={() => handleLogout("redirect")}>
         Sign out using Redirect
-      </Dropdown.Item>
+      </Dropdown.Item> */}
     </DropdownButton>
   );
 };

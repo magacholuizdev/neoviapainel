@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Container, InputWrapper } from "../../styles/pages/login/styles";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useWindowSize } from "hooks/useWindowSize";
@@ -12,15 +11,23 @@ import { clearSpaces, isEmptyString } from "utils/utils";
 import ButtonSubmit from "components/Button/Submit";
 import ButtonGroup from "components/ButtonGroup";
 import BannerBig from "components/BannerBig";
-import BannerComponent from "components/BannerComponent";
-import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "components/MicrosoftSignIn/authConfig";
-import { callMsGraph } from "components/MicrosoftSignIn/graph";
-import { Button } from "react-bootstrap";
-import { ProfileData } from "components/MicrosoftSignIn/ProfileData";
 import { PageLayout } from "components/MicrosoftSignIn/PageLayout";
+import router, { useRouter } from "next/router";
+import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import {
+  loginRequest,
+  msalConfig,
+} from "components/MicrosoftSignIn/authConfig";
+import { callMsGraph } from "components/MicrosoftSignIn/graph";
+import { User } from "models/User";
+import { setCookie } from "nookies";
+import { AuthByProviderEnum } from "models/Auth/AuthByProviderEnum";
+import { AuthResponse } from "models/Auth/AuthReponse";
+import AuthContainer from "components/AuthContainer";
+import { AuthService } from "services/AuthService";
 
 export default function Login(): JSX.Element {
+  const cookieParams = { secure: true, sameSite: "Strict" };
   const [signIn, setSignIn] = useState<SignInData>({ email: "" } as SignInData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { signInData, msg, logout } = useContext(AuthContext);
@@ -29,6 +36,8 @@ export default function Login(): JSX.Element {
   const [isMobile, setIsMobile] = useState(false);
   const { windowWidth } = useWindowSize();
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState<User>();
+  const [graphData, setGraphData] = useState([]);
 
   useEffect(() => {
     if (window.innerWidth < 1024) {
@@ -40,15 +49,60 @@ export default function Login(): JSX.Element {
 
   const ERROR_TIME_AWAIT = 5000;
 
-  async function handleSignIn(event: FormEvent) {
-    event.preventDefault();
+  const { instance, accounts } = useMsal();
 
+  const isAuthenticated = useIsAuthenticated();
+  useEffect(() => {
+    console.log("Entrou no useEffect");
+    if (isAuthenticated) {
+      instance
+        .acquireTokenSilent({
+          ...loginRequest,
+          account: accounts[0],
+        })
+        .then((response) => {
+          callMsGraph(response.accessToken).then((response) => {
+            console.log(response);
+            setSignIn({ ...signIn, email: response.userPrincipalName });
+            handleProviderSignIn(AuthByProviderEnum.MICROSOFT, {
+              id: response.id,
+              name: response.displayName,
+              email: response.userPrincipalName,
+            });
+            router.push("/home");
+          });
+        });
+    }
+  }, [isAuthenticated]);
+
+  async function callInfoUser(email: string) {
+    setUser(await AuthService.portalLogin(email));
+  }
+
+  async function handleSignIn(event: FormEvent) {
+    console.log("Entrou aqui");
+    event.preventDefault();
     if (isEmptyString(signIn.email) || isEmptyString(signIn.password))
       return handleError("Preencha todos os campos");
 
     setIsLoading(true);
     signInData(signIn);
   }
+
+  const handleProviderSignIn = (
+    authProvider: AuthByProviderEnum,
+    user: AuthResponse
+  ) => {
+    console.log("Email: ", user.email);
+    const newSignIn: SignInData = {
+      email: user.email || "",
+      password: "",
+      authByProvider: authProvider,
+      authProviderUserId: user.id,
+    };
+    setIsLoading(true);
+    signInData(newSignIn);
+  };
 
   const handleInputChange = ({ target }: React.ChangeEvent<any>): void => {
     const { name } = target;
@@ -106,7 +160,7 @@ export default function Login(): JSX.Element {
               <ButtonSubmit>ENTRAR</ButtonSubmit>
             </ButtonGroup>
             <div className="form__esqueci-senha">
-              <PageLayout></PageLayout>
+              <AuthContainer onResponse={handleProviderSignIn} />
             </div>
           </form>
         </div>

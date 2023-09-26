@@ -38,10 +38,8 @@ export default function InputText({ ...props }: InputProps): JSX.Element {
 
   return (
     <StyledContainerInput>
-      <StyledLabel>
-        {props.title}
-        {props.required && <span>{"*"}</span>}
-      </StyledLabel>
+      {props.title}
+      {props.required && <span>{"*"}</span>}
       <StyledContainerInputChildren>
         <StyledInput
           type={props.type}
