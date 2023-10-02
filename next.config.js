@@ -6,7 +6,8 @@ const nextConfig = {
     // Enables the styled-components SWC transform
     styledComponents: true
   },
-  trailingSlash: true
+  trailingSlash: true,
+  output: "standalone",
 }
 
 module.exports = nextConfig

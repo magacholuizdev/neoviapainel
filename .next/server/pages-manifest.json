@@ -1,8 +1,10 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/home": "pages/home.js",
-  "/usuarios": "pages/usuarios.js"
+  "/ErrorBoundary": "pages/ErrorBoundary.html",
+  "/home": "pages/home.html",
+  "/": "pages/index.html",
+  "/usuarios": "pages/usuarios.html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
 }
