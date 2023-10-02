@@ -58,7 +58,9 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         router.push("/home");
       }
       // }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function logout() {

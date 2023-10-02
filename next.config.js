@@ -7,7 +7,6 @@ const nextConfig = {
     styledComponents: true
   },
   trailingSlash: true,
-  output: "standalone",
 }
 
 module.exports = nextConfig

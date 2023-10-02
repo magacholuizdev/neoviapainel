@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm i
+RUN yarn install --network-timeout 1000000
 
 RUN npm run build 
 
