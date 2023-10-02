@@ -4,8 +4,10 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm ci
+RUN npm i
 
 RUN npm run build 
 
-CMD ['npm', 'start']
+EXPOSE 3000
+
+CMD ["npx", "next", "start"]
